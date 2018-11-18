@@ -4,10 +4,18 @@
              x:Class="TesteDrive.Views.DetalheView"
              Title="{Binding Veiculo.Nome}">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Detalhes"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+        <StackLayout Padding="25">
+            <TableView Intent="Settings">
+                <TableRoot>
+                    <TableSection Title="Acessórios">
+                        <SwitchCell Text="{Binding TextoFreioAbs}" On="{Binding TemFreioAbs,Mode=TwoWay}"/>
+                        <SwitchCell Text="{Binding TextoArCondicionado}" On="{Binding TemArCondicionado,Mode=TwoWay}" />
+                        <SwitchCell Text="{Binding TextoMp3Player}" On="{Binding TemMp3Player,Mode=TwoWay}" />
+                        <TextCell Text="{Binding ValorTotal,Mode=TwoWay}"/>
+                    </TableSection>
+                </TableRoot>
+            </TableView>
+
             <Button x:Name="buttonProximo"
                     Text="Próximo"
                     Clicked="ButtonProximo_Clicked"
