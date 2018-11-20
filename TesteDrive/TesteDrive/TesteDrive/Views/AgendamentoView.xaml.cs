@@ -1,5 +1,6 @@
 ﻿using System;
 using TesteDrive.Models;
+using TesteDrive.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -8,97 +9,42 @@ namespace TesteDrive.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AgendamentoView : ContentPage
     {
-        public Agendamento Agendamento { get; set; }
-
-        public Veiculo Veiculo
-        {
-            get
-            {
-                return Agendamento.Veiculo;
-            }
-            set
-            {
-                Agendamento.Veiculo = value;
-            }
-        }
-
-        public string Nome
-        {
-            get
-            {
-                return Agendamento.Nome;
-            }
-            set
-            {
-                Agendamento.Nome = value;
-            }
-        }
-        public string Fone
-        {
-            get
-            {
-                return Agendamento.Fone;
-            }
-            set
-            {
-                Agendamento.Fone = value;
-            }
-        }
-        public string Email
-        {
-            get
-            {
-                return Agendamento.Email;
-            }
-            set
-            {
-                Agendamento.Email = value;
-            }
-        }
-
-        public DateTime DataAgendamento
-        {
-            get
-            {
-                return Agendamento.DataAgendamento;
-            }
-            set
-            {
-                Agendamento.DataAgendamento = value;
-            }
-        }
-
-        public TimeSpan HoraAgendamento
-        {
-            get
-            {
-                return Agendamento.HoraAgendamento;
-            }
-            set
-            {
-                Agendamento.HoraAgendamento = value;
-            }
-        }
+        public AgendamentoViewModel viewModel { get; set; }
 
         public AgendamentoView(Veiculo veiculo)
         {
             InitializeComponent();
-            this.Agendamento = new Agendamento();
-            this.Agendamento.Veiculo = veiculo;
-            this.BindingContext = this;
+            this.viewModel = new AgendamentoViewModel(veiculo);
+            this.BindingContext = this.viewModel;
         }
 
-        private void ButtonAgendar_Clicked(object sender, EventArgs e)
+        protected override void OnAppearing()
         {
-            DisplayAlert("Agendamento",
-                string.Format(
-                @"
-                 Nome: {0}
-                 Fone: {1}
-                 E-mail: {2}
-                 Data Agendamento: {3}
-                 Hora Agendamento: {4}", Nome, Fone, Email, DataAgendamento.ToString("dd/MM/yyyy"), HoraAgendamento),
-                "Ok");
+            base.OnAppearing();
+            MessagingCenter.Subscribe<Agendamento>(this, "Agendamento", (msg) =>
+             {
+                 DisplayAlert("Agendamento",
+                     string.Format(
+                     @"
+                     Veiculo : {0}
+                     Nome: {1}
+                     Fone: {2}
+                     E-mail: {3}
+                     Data Agendamento: {4}
+                     Hora Agendamento: {5}",
+                     viewModel.Agendamento.Veiculo.Nome,
+                     viewModel.Agendamento.Nome,
+                     viewModel.Agendamento.Fone,
+                     viewModel.Agendamento.Email,
+                     viewModel.Agendamento.DataAgendamento.ToString("dd/MM/yyyy"),
+                     viewModel.Agendamento.HoraAgendamento),
+                     "Ok");
+             });
+        }
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            MessagingCenter.Unsubscribe<Agendamento>(this, "Agendamento");
         }
     }
 }

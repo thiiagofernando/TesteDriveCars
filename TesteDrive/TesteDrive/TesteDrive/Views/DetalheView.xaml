@@ -18,7 +18,7 @@
 
             <Button x:Name="buttonProximo"
                     Text="Próximo"
-                    Clicked="ButtonProximo_Clicked"
+                    Command="{Binding ProximoCommand}"
                     VerticalOptions="End">
             </Button>
         </StackLayout>
