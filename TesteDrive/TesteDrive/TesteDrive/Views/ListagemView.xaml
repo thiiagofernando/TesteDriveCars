@@ -5,27 +5,27 @@
              xmlns:vm="clr-namespace:TesteDrive.ViewModels"
              Title="Alura Cars"
              x:Class="TesteDrive.Views.ListagemView">
-    <ContentPage.BindingContext>
-        <vm:ListagemVeiwModel></vm:ListagemVeiwModel>
-    </ContentPage.BindingContext>
-    <ListView x:Name="listViewVeiculos" 
+    <StackLayout  Margin="25">
+        <ActivityIndicator IsRunning="{Binding Aguarde}" IsVisible="{Binding Aguarde}">
+            
+        </ActivityIndicator>
+        <ListView x:Name="listViewVeiculos" 
               ItemsSource="{Binding Veiculos}" 
-              Margin="25"
               SelectedItem="{Binding VeiculoSelecionado}}">
-        <ListView.ItemTemplate>
-            <DataTemplate>
-                <ViewCell>
-                    <ViewCell.View>
-                        <StackLayout Orientation="Horizontal">
-                            <Label Text="{Binding Nome}" FontSize="18" VerticalTextAlignment="Center"></Label>
-                            <Label Text=" - " VerticalTextAlignment="Center"></Label>
-                            <Label Text="{Binding PrecoFormatado}" FontAttributes="Bold" VerticalTextAlignment="Center"></Label>
-                        </StackLayout>
-                    </ViewCell.View>
-                </ViewCell>
-            </DataTemplate>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <ViewCell.View>
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="{Binding Nome}" FontSize="18" VerticalTextAlignment="Center"></Label>
+                                <Label Text=" - " VerticalTextAlignment="Center"></Label>
+                                <Label Text="{Binding PrecoFormatado}" FontAttributes="Bold" VerticalTextAlignment="Center"></Label>
+                            </StackLayout>
+                        </ViewCell.View>
+                    </ViewCell>
+                </DataTemplate>
 
-        </ListView.ItemTemplate>
-    </ListView>
-
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
 </ContentPage>
